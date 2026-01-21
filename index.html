@@ -86,7 +86,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background 0.4s ease, padding 0.4s ease;
+      transition: background-color 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
     }
 
     .nav.scrolled {
@@ -139,6 +139,12 @@
       width: 100%;
     }
 
+    .nav-links a:focus-visible {
+      outline: 2px solid var(--color-coral);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
     .nav-cta {
       font-family: var(--font-body);
       font-size: 0.875rem;
@@ -149,7 +155,7 @@
       border: none;
       border-radius: 100px;
       cursor: pointer;
-      transition: all 0.3s var(--ease-out-expo);
+      transition: background-color 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
     }
 
     .nav-cta:hover {
@@ -279,7 +285,7 @@
       border: none;
       border-radius: 100px;
       cursor: pointer;
-      transition: all 0.4s var(--ease-out-expo);
+      transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
       position: relative;
       overflow: hidden;
     }
@@ -325,7 +331,7 @@
       border: 1.5px solid var(--color-navy);
       border-radius: 100px;
       cursor: pointer;
-      transition: all 0.4s var(--ease-out-expo);
+      transition: background-color 0.4s var(--ease-out-expo), color 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo);
     }
 
     .btn-secondary:hover {
@@ -571,7 +577,7 @@
       padding: 3rem;
       position: relative;
       overflow: hidden;
-      transition: all 0.5s var(--ease-out-expo);
+      transition: transform 0.5s var(--ease-out-expo), border-color 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
       cursor: pointer;
       border: 1px solid transparent;
     }
@@ -909,10 +915,10 @@
       border: 2px solid rgba(26, 39, 68, 0.1);
       border-radius: 100px;
       background: white;
-      transition: all 0.3s ease;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .cta-input:focus {
+    .cta-input:focus-visible {
       outline: none;
       border-color: var(--color-coral);
       box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.2);
@@ -964,6 +970,12 @@
       color: var(--color-coral-light);
     }
 
+    .footer-links a:focus-visible {
+      outline: 2px solid var(--color-coral-light);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
     .footer-copyright {
       font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.3);
@@ -973,12 +985,41 @@
     .reveal {
       opacity: 0;
       transform: translateY(40px);
-      transition: all 0.8s var(--ease-out-expo);
+      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
     }
 
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      .hero-eyebrow,
+      .hero-title,
+      .hero-subtitle,
+      .hero-cta-group {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
     }
 
     /* Responsive */
@@ -1138,7 +1179,7 @@
         </div>
         <h3>Strategic Alignment</h3>
         <p>We help you clarify vision, align priorities, and create strategic coherence from leadership to front lines. Every initiative moves in the same direction.</p>
-        <button type="button" class="service-link">Explore →</button>
+        <button type="button" class="service-link" aria-label="Explore Strategic Alignment services">Explore →</button>
       </div>
       <div class="service-card reveal">
         <div class="service-icon">
@@ -1146,7 +1187,7 @@
         </div>
         <h3>Team Orchestration</h3>
         <p>Transform group dynamics through facilitated workshops, leadership coaching, and custom team development programs that build lasting collaborative capacity.</p>
-        <button type="button" class="service-link">Explore →</button>
+        <button type="button" class="service-link" aria-label="Explore Team Orchestration services">Explore →</button>
       </div>
       <div class="service-card reveal">
         <div class="service-icon">
@@ -1154,7 +1195,7 @@
         </div>
         <h3>Performance Cultivation</h3>
         <p>Sustainable high performance through customized metrics, feedback systems, and growth frameworks that elevate without burning out.</p>
-        <button type="button" class="service-link">Explore →</button>
+        <button type="button" class="service-link" aria-label="Explore Performance Cultivation services">Explore →</button>
       </div>
     </div>
   </section>
@@ -1220,7 +1261,7 @@
       <p>Let's start a conversation about where you are and where you want to be.</p>
       <form class="cta-form">
         <label for="cta-email" class="visually-hidden">Email address</label>
-        <input type="email" id="cta-email" class="cta-input" placeholder="Enter your email" aria-label="Email address">
+        <input type="email" id="cta-email" name="email" class="cta-input" placeholder="Enter your email…" autocomplete="email">
         <button type="submit" class="btn-primary"><span>Get in Touch</span></button>
       </form>
     </div>
@@ -1237,7 +1278,7 @@
         <li><a href="mailto:hello@velody.io">Contact</a></li>
         <li><a href="#privacy">Privacy</a></li>
       </ul>
-      <div class="footer-copyright">© 2025 Velody Consulting. All rights reserved.</div>
+      <div class="footer-copyright">© <span id="current-year">2025</span> Velody Consulting. All rights reserved.</div>
     </div>
   </footer>
 
@@ -1296,15 +1337,20 @@
       });
     });
 
-    // Parallax effect on hero waves (subtle)
-    window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY;
-      const waves = document.querySelectorAll('.hero-wave');
-      waves.forEach((wave, index) => {
-        const speed = 0.1 * (index + 1);
-        wave.style.transform = `translateY(${scrolled * speed}px)`;
+    // Parallax effect on hero waves (subtle) - skip if reduced motion preferred
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const waves = document.querySelectorAll('.hero-wave');
+        waves.forEach((wave, index) => {
+          const speed = 0.1 * (index + 1);
+          wave.style.transform = `translateY(${scrolled * speed}px)`;
+        });
       });
-    });
+    }
+
+    // Dynamic copyright year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
