@@ -76,14 +76,25 @@
       line-height: 1.1;
     }
 
+    /* Safe Area Cover - covers iPhone notch/Dynamic Island area */
+    .safe-area-cover {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: env(safe-area-inset-top, 0px);
+      background: var(--color-cream);
+      z-index: 10000;
+    }
+
     /* Navigation */
     .nav {
       position: fixed;
-      top: calc(-1 * env(safe-area-inset-top, 0px));
+      top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      padding: calc(1.5rem + env(safe-area-inset-top, 0px) + env(safe-area-inset-top, 0px)) 4rem 1.5rem;
+      padding: calc(1.5rem + env(safe-area-inset-top, 0px)) 4rem 1.5rem;
       padding-left: max(4rem, env(safe-area-inset-left, 0px));
       padding-right: max(4rem, env(safe-area-inset-right, 0px));
       display: flex;
@@ -96,8 +107,12 @@
     .nav.scrolled {
       background: rgba(250, 248, 245, 0.95);
       backdrop-filter: blur(20px);
-      padding: calc(1rem + env(safe-area-inset-top, 0px) + env(safe-area-inset-top, 0px)) 4rem 1rem;
+      padding: calc(1rem + env(safe-area-inset-top, 0px)) 4rem 1rem;
       box-shadow: 0 1px 0 rgba(26, 39, 68, 0.08);
+    }
+
+    .safe-area-cover.scrolled {
+      background: rgba(250, 248, 245, 0.95);
     }
 
     .nav-logo {
@@ -717,12 +732,13 @@
     }
 
     .service-card {
-      background: var(--color-cream);
+      background: white;
       border-radius: 24px;
       padding: 3rem;
       position: relative;
       transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
       cursor: pointer;
+      box-shadow: 0 2px 20px rgba(26, 39, 68, 0.06);
     }
 
     .service-card:hover {
@@ -1222,6 +1238,9 @@
   </style>
 </head>
 <body>
+  <!-- Safe area cover for iPhone notch/Dynamic Island -->
+  <div class="safe-area-cover" aria-hidden="true"></div>
+
   <!-- Navigation -->
   <nav class="nav" aria-label="Main navigation">
     <a href="#" class="nav-logo">Vel<span>o</span>dy</a>
@@ -1432,11 +1451,14 @@
   <script>
     // Navigation scroll effect
     const nav = document.querySelector('.nav');
+    const safeAreaCover = document.querySelector('.safe-area-cover');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 100) {
         nav.classList.add('scrolled');
+        safeAreaCover.classList.add('scrolled');
       } else {
         nav.classList.remove('scrolled');
+        safeAreaCover.classList.remove('scrolled');
       }
     });
 
