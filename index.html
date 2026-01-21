@@ -96,11 +96,10 @@
     .nav::before {
       content: '';
       position: absolute;
-      top: 0;
+      top: calc(-1 * env(safe-area-inset-top, 0px));
       left: 0;
       right: 0;
-      height: calc(100% + env(safe-area-inset-top, 0px));
-      margin-top: calc(-1 * env(safe-area-inset-top, 0px));
+      bottom: 0;
       background: var(--color-cream);
       z-index: -1;
       transition: background-color 0.4s ease;
@@ -741,7 +740,8 @@
       overflow: hidden;
       transition: transform 0.5s var(--ease-out-expo), border-color 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
       cursor: pointer;
-      border: 1px solid transparent;
+      border: none;
+      box-shadow: none;
     }
 
     .service-card::before {
@@ -759,7 +759,6 @@
 
     .service-card:hover {
       transform: translateY(-8px);
-      border-color: rgba(26, 39, 68, 0.08);
       box-shadow: 0 30px 60px rgba(26, 39, 68, 0.08);
     }
 
@@ -768,7 +767,6 @@
     }
 
     .service-card:focus-within {
-      border-color: rgba(26, 39, 68, 0.15);
       box-shadow: 0 30px 60px rgba(26, 39, 68, 0.08);
     }
 
