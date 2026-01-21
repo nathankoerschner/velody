@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Velody | Performance in Harmony</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 8l10 18L26 8' fill='none' stroke='%23e07a5f' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -83,17 +83,18 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      padding: 1.5rem 4rem;
+      padding: calc(1.5rem + env(safe-area-inset-top, 0px)) 4rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       transition: background-color 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+      background: var(--color-cream);
     }
 
     .nav.scrolled {
       background: rgba(250, 248, 245, 0.95);
       backdrop-filter: blur(20px);
-      padding: 1rem 4rem;
+      padding: calc(1rem + env(safe-area-inset-top, 0px)) 4rem 1rem;
       box-shadow: 0 1px 0 rgba(26, 39, 68, 0.08);
     }
 
@@ -1026,7 +1027,7 @@
     /* Responsive */
     @media (max-width: 1024px) {
       .nav {
-        padding: 1rem 2rem;
+        padding: calc(1rem + env(safe-area-inset-top, 0px)) 2rem 1rem;
       }
 
       .philosophy-inner {
