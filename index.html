@@ -189,9 +189,149 @@
       outline-offset: 2px;
     }
 
+    /* Hamburger Menu Button */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--color-navy);
+      border-radius: 2px;
+      transition: transform 0.3s var(--ease-out-expo), opacity 0.3s var(--ease-out-expo);
+    }
+
+    .nav-hamburger[aria-expanded="true"] span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav-hamburger[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-hamburger[aria-expanded="true"] span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .nav-hamburger:focus-visible {
+      outline: 2px solid var(--color-coral);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* Mobile Navigation Overlay */
+    .mobile-nav-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 24, 41, 0.5);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .mobile-nav-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Mobile Navigation Panel */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(320px, 85vw);
+      background: var(--color-cream);
+      z-index: 1000;
+      padding: calc(5rem + env(safe-area-inset-top, 0px)) 2rem 2rem;
+      padding-right: max(2rem, env(safe-area-inset-right, 0px));
+      transform: translateX(100%);
+      transition: transform 0.4s var(--ease-out-expo);
+      overflow-y: auto;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .mobile-nav.open {
+      transform: translateX(0);
+    }
+
+    .mobile-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .mobile-nav-links a {
+      display: block;
+      padding: 1rem 0;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--color-navy);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(26, 39, 68, 0.08);
+      transition: color 0.2s ease;
+    }
+
+    .mobile-nav-links a:hover,
+    .mobile-nav-links a:focus {
+      color: var(--color-coral);
+    }
+
+    .mobile-nav-links a:focus-visible {
+      outline: 2px solid var(--color-coral);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .mobile-nav-cta {
+      margin-top: 2rem;
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 1rem 1.75rem;
+      background: var(--color-navy);
+      color: var(--color-cream);
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: background-color 0.3s var(--ease-out-expo), transform 0.3s var(--ease-out-expo);
+    }
+
+    .mobile-nav-cta:hover {
+      background: var(--color-coral);
+      transform: translateY(-2px);
+    }
+
+    .mobile-nav-cta:focus-visible {
+      outline: 2px solid var(--color-coral);
+      outline-offset: 2px;
+    }
+
+    /* Body scroll lock when mobile nav is open */
+    body.nav-open {
+      overflow: hidden;
+    }
+
     /* Hero Section */
     .hero {
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -551,6 +691,7 @@
       font-weight: 500;
       color: var(--color-coral-light);
       line-height: 1;
+      font-variant-numeric: tabular-nums;
     }
 
     .stat-label {
@@ -770,7 +911,7 @@
       font-size: 1.75rem;
       font-weight: 600;
       color: var(--color-coral);
-      transition: all 0.4s var(--ease-out-expo);
+      transition: background-color 0.4s var(--ease-out-expo), color 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo);
     }
 
     .process-step:hover .step-number {
@@ -1080,8 +1221,18 @@
     }
 
     @media (max-width: 768px) {
-      .nav-links {
+      .nav-links,
+      .nav-cta {
         display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+
+      .mobile-nav-overlay,
+      .mobile-nav {
+        display: block;
       }
 
       .hero {
@@ -1123,6 +1274,23 @@
       <li><a href="#testimonials">Stories</a></li>
     </ul>
     <button class="nav-cta">Start a Conversation</button>
+    <button class="nav-hamburger" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav-overlay" aria-hidden="true"></div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
+    <ul class="mobile-nav-links">
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#testimonials">Stories</a></li>
+    </ul>
+    <button class="mobile-nav-cta">Start a Conversation</button>
   </nav>
 
   <!-- Hero -->
@@ -1372,6 +1540,83 @@
 
     // Dynamic copyright year
     document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Mobile Navigation
+    const hamburger = document.querySelector('.nav-hamburger');
+    const mobileNav = document.querySelector('.mobile-nav');
+    const mobileOverlay = document.querySelector('.mobile-nav-overlay');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a, .mobile-nav-cta');
+
+    function openMobileNav() {
+      hamburger.setAttribute('aria-expanded', 'true');
+      hamburger.setAttribute('aria-label', 'Close menu');
+      mobileNav.setAttribute('aria-hidden', 'false');
+      mobileNav.classList.add('open');
+      mobileOverlay.classList.add('visible');
+      document.body.classList.add('nav-open');
+      // Focus first link for accessibility
+      mobileNavLinks[0].focus();
+    }
+
+    function closeMobileNav() {
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      mobileNav.classList.remove('open');
+      mobileOverlay.classList.remove('visible');
+      document.body.classList.remove('nav-open');
+      hamburger.focus();
+    }
+
+    function toggleMobileNav() {
+      const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        closeMobileNav();
+      } else {
+        openMobileNav();
+      }
+    }
+
+    hamburger.addEventListener('click', toggleMobileNav);
+    mobileOverlay.addEventListener('click', closeMobileNav);
+
+    // Close mobile nav when clicking a link
+    mobileNavLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        closeMobileNav();
+      });
+    });
+
+    // Close mobile nav on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && hamburger.getAttribute('aria-expanded') === 'true') {
+        closeMobileNav();
+      }
+    });
+
+    // Trap focus within mobile nav and hamburger when open
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab' || hamburger.getAttribute('aria-expanded') !== 'true') return;
+
+      const focusableElements = mobileNav.querySelectorAll('a, button');
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      // Include hamburger in the focus cycle
+      if (e.shiftKey && document.activeElement === hamburger) {
+        e.preventDefault();
+        lastElement.focus();
+      } else if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        hamburger.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        hamburger.focus();
+      } else if (!e.shiftKey && document.activeElement === hamburger) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    });
   </script>
 </body>
 </html>
